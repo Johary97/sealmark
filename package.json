@@ -1,0 +1,23 @@
+{
+  "name": "sealmark",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Sealmark — Sign PDF documents, seal them with a SHA-256 fingerprint, and verify their integrity. End-to-end client-side: no upload, no server.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^4.7.76",
+    "signature_pad": "^5.0.7",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.0.5"
+  }
+}
