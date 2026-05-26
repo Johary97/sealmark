@@ -18,66 +18,104 @@
       <span class="theme-switcher__label">{{ active?.name }}</span>
     </button>
 
-    <div v-if="open" role="listbox" class="theme-switcher__menu" aria-label="Choisir le thème">
-      <button
-        v-for="m in availableThemes"
-        :key="m.slug"
-        type="button"
-        role="option"
-        :aria-selected="m.slug === slug"
-        :class="['theme-switcher__option', { 'is-active': m.slug === slug }]"
-        @click="onPick(m.slug)"
+    <Teleport to="body">
+      <div
+        v-if="open"
+        ref="dropdownRef"
+        role="listbox"
+        class="theme-switcher__menu"
+        aria-label="Choisir le thème"
+        :style="dropdownStyle"
       >
-        <span class="theme-switcher__swatch" :style="{ background: m.swatch }" aria-hidden="true" />
-        <span class="theme-switcher__text">
-          <span class="theme-switcher__name">
-            {{ m.name }}
-            <svg v-if="m.slug === slug" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
+        <button
+          v-for="m in availableThemes"
+          :key="m.slug"
+          type="button"
+          role="option"
+          :aria-selected="m.slug === slug"
+          :class="['theme-switcher__option', { 'is-active': m.slug === slug }]"
+          @click="onPick(m.slug)"
+        >
+          <span class="theme-switcher__swatch" :style="{ background: m.swatch }" aria-hidden="true" />
+          <span class="theme-switcher__text">
+            <span class="theme-switcher__name">
+              {{ m.name }}
+              <svg v-if="m.slug === slug" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </span>
+            <span class="theme-switcher__desc">{{ m.description }}</span>
           </span>
-          <span class="theme-switcher__desc">{{ m.description }}</span>
-        </span>
-      </button>
-    </div>
+        </button>
+      </div>
+    </Teleport>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onBeforeUnmount, watch } from 'vue'
+import { ref, computed, onBeforeUnmount, watch, nextTick } from 'vue'
 import { useTheme } from './useTheme.js'
 
 const { slug, availableThemes, switchTheme } = useTheme()
 const open = ref(false)
 const rootRef = ref(null)
+const dropdownRef = ref(null)
+const coords = ref(null)
 
 const active = computed(
   () => availableThemes.value.find((m) => m.slug === slug.value) || availableThemes.value[0]
 )
+
+const dropdownStyle = computed(() => {
+  if (!coords.value) return { visibility: 'hidden' }
+  return {
+    position: 'fixed',
+    top: `${coords.value.top}px`,
+    right: `${coords.value.right}px`,
+    zIndex: 9999,
+  }
+})
 
 function onPick(s) {
   switchTheme(s)
   open.value = false
 }
 
+function computeCoords() {
+  if (!rootRef.value) return
+  const r = rootRef.value.getBoundingClientRect()
+  coords.value = { top: r.bottom + 6, right: window.innerWidth - r.right }
+}
+
 function onDocMouseDown(e) {
-  if (rootRef.value && !rootRef.value.contains(e.target)) open.value = false
+  const inRoot = rootRef.value && rootRef.value.contains(e.target)
+  const inDropdown = dropdownRef.value && dropdownRef.value.contains(e.target)
+  if (!inRoot && !inDropdown) open.value = false
 }
 function onKey(e) {
   if (e.key === 'Escape') open.value = false
 }
 
-watch(open, (v) => {
+watch(open, async (v) => {
   if (v) {
+    await nextTick()
+    computeCoords()
+    window.addEventListener('scroll', computeCoords, true)
+    window.addEventListener('resize', computeCoords)
     document.addEventListener('mousedown', onDocMouseDown)
     document.addEventListener('keydown', onKey)
   } else {
+    coords.value = null
+    window.removeEventListener('scroll', computeCoords, true)
+    window.removeEventListener('resize', computeCoords)
     document.removeEventListener('mousedown', onDocMouseDown)
     document.removeEventListener('keydown', onKey)
   }
 })
 
 onBeforeUnmount(() => {
+  window.removeEventListener('scroll', computeCoords, true)
+  window.removeEventListener('resize', computeCoords)
   document.removeEventListener('mousedown', onDocMouseDown)
   document.removeEventListener('keydown', onKey)
 })
@@ -116,11 +154,7 @@ onBeforeUnmount(() => {
   .theme-switcher__label { display: none; }
 }
 .theme-switcher__menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 6px);
   width: 18rem;
-  z-index: 50;
   background: var(--surface-solid, var(--surface-background, #fff));
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg, 12px);
