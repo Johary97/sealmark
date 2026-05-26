@@ -8,24 +8,6 @@
           <span class="no-brand__sub">étude · signature · sceau</span>
         </span>
       </a>
-      <div class="no-header__tools">
-        <ThemeSwitcher />
-        <button
-          type="button"
-          class="no-mode-toggle"
-          :title="mode === 'dark' ? 'Mode clair' : 'Mode sombre'"
-          :aria-label="mode === 'dark' ? 'Mode clair' : 'Mode sombre'"
-          @click="toggleMode"
-        >
-          <svg v-if="mode === 'dark'" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="4" />
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-          </svg>
-          <svg v-else viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-          </svg>
-        </button>
-      </div>
     </div>
     <div class="no-hero">
       <slot name="header" />
@@ -47,13 +29,12 @@
       <slot name="footer" />
     </div>
   </footer>
+
+  <AppFab />
 </template>
 
 <script setup>
-import { useTheme } from '@theme/useTheme.js'
-import ThemeSwitcher from '@theme/ThemeSwitcher.vue'
-
-const { mode, toggleMode } = useTheme()
+import AppFab from '@components/AppFab.vue'
 </script>
 
 <style scoped>
@@ -114,30 +95,6 @@ const { mode, toggleMode } = useTheme()
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-.no-header__tools {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.no-mode-toggle {
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  background: transparent;
-  color: var(--text);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
-}
-.no-mode-toggle:hover {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-  transform: rotate(-2deg);
-}
-
 .no-hero {
   max-width: 720px;
   margin: 0 auto;

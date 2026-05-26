@@ -5,17 +5,6 @@
         <span class="cv-prompt">[SEALMARK]</span>
         <span class="cv-status">// integrity engine v1.0</span>
       </a>
-      <div class="cv-tools">
-        <ThemeSwitcher />
-        <button
-          type="button"
-          class="cv-mode-toggle"
-          @click="toggleMode"
-          :title="mode === 'dark' ? 'LIGHT MODE' : 'DARK MODE'"
-        >
-          {{ mode === 'dark' ? 'LIGHT' : 'DARK' }}
-        </button>
-      </div>
     </div>
     <div class="cv-hero">
       <slot name="header" />
@@ -38,13 +27,12 @@
       <slot name="footer" />
     </div>
   </footer>
+
+  <AppFab />
 </template>
 
 <script setup>
-import { useTheme } from '@theme/useTheme.js'
-import ThemeSwitcher from '@theme/ThemeSwitcher.vue'
-
-const { mode, toggleMode } = useTheme()
+import AppFab from '@components/AppFab.vue'
 </script>
 
 <style scoped>
@@ -81,29 +69,6 @@ const { mode, toggleMode } = useTheme()
   letter-spacing: 0.05em;
   text-transform: lowercase;
 }
-.cv-tools {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.cv-mode-toggle {
-  border: 1px solid var(--primary-color);
-  border-radius: var(--radius-md);
-  background: transparent;
-  color: var(--primary-color);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  padding: 0.35rem 0.6rem;
-  cursor: pointer;
-  transition: background 120ms ease, box-shadow 120ms ease;
-}
-.cv-mode-toggle:hover {
-  background: color-mix(in srgb, var(--primary-color) 15%, transparent);
-  box-shadow: 0 0 12px var(--primary-shadow);
-}
-
 .cv-hero {
   max-width: 90rem;
   margin: 0 auto;
