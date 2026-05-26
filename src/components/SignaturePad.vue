@@ -20,7 +20,7 @@
           <div class="resize-handle edge-w" @mousedown="startResize($event, 'w')"></div>
 
           <div v-if="isEmpty" class="dessin-title">
-            Dessinez votre signature
+            Tracez votre signature ici
           </div>
         </div>
       </div>
@@ -132,7 +132,7 @@ function clearSignature() {
 
 function saveSignature() {
   if (!signaturePad || signaturePad.isEmpty()) {
-    emit('signature-error', 'Aucune signature à sauvegarder')
+    emit('signature-error', 'Le pavé est vide')
     return null
   }
 
@@ -141,7 +141,7 @@ function saveSignature() {
     emit('signature-save', signatureData)
     return signatureData
   } catch (error) {
-    emit('signature-error', 'Erreur technique lors de la sauvegarde')
+    emit('signature-error', 'Export PNG impossible')
     return null
   }
 }

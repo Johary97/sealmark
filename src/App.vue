@@ -1,14 +1,12 @@
 <template>
   <ThemeBoundary>
-    <!-- Hero (slot "header") -->
     <template #header>
-      <h1>Signez vos PDF.<br />Prouvez leur intégrité.</h1>
+      <h1>Signature PDF<br />et empreinte SHA-256.</h1>
       <p class="tagline">
-        Apposez une signature manuscrite, scellez le document avec une empreinte cryptographique et vérifiez à tout moment qu'il n'a pas été modifié. Vos fichiers ne quittent jamais votre appareil.
+        Apposez une signature manuscrite sur un PDF, calculez son empreinte SHA-256, vérifiez l'intégrité plus tard. Traitement local.
       </p>
     </template>
 
-    <!-- Onglets (slot "tabs") -->
     <template #tabs>
       <button
         v-for="tab in tabs"
@@ -20,13 +18,12 @@
       </button>
     </template>
 
-    <!-- Contenu principal (slot par défaut) -->
     <section v-if="activeTab === 'sign'" class="panel-section fade-in-up">
-      <h2 class="section-step">1. Sélectionner le document</h2>
+      <h2 class="section-step">1. Document</h2>
       <div v-if="!pdfFile">
         <PdfDropzone @file-selected="onPdfSelected" />
         <p class="hint">
-          Vous n'avez rien sous la main ? <a href="#" @click.prevent="loadSample">Essayer avec un document d'exemple</a>.
+          Pas de fichier ? <a href="#" @click.prevent="loadSample">Charger un PDF d'exemple</a>.
         </p>
       </div>
       <div v-else class="loaded-file">
@@ -37,7 +34,7 @@
       <template v-if="pdfFile">
         <div class="split">
           <div class="split-left">
-            <h2 class="section-step">2. Choisir l'emplacement</h2>
+            <h2 class="section-step">2. Emplacement</h2>
             <div class="cv-scanline-host">
               <PdfPreview
                 :pdf-file="pdfFile"
@@ -49,7 +46,7 @@
           </div>
 
           <div class="split-right">
-            <h2 class="section-step">3. Apposer la signature</h2>
+            <h2 class="section-step">3. Signature</h2>
             <SignaturePad
               @signature-save="onSignatureSave"
               @signature-clear="signatureDataUrl = null"
@@ -63,21 +60,21 @@
                 :disabled="!signatureDataUrl || !signaturePosition || processing"
                 @click="signPdf"
               >
-                {{ processing ? 'Scellement en cours…' : '4. Sceller et télécharger' }}
+                {{ processing ? 'Signature en cours…' : '4. Signer et télécharger' }}
               </button>
             </div>
 
             <div v-if="signedResult" class="result-box fade-in-up notary-stamp">
-              <p class="result-title">✓ Document scellé</p>
-              <button type="button" class="btn btn-primary" @click="downloadSigned">Télécharger le document signé</button>
+              <p class="result-title">Document signé</p>
+              <button type="button" class="btn btn-primary" @click="downloadSigned">Télécharger le PDF signé</button>
 
               <div class="hash-display">
                 <span class="badge">Empreinte</span>
                 <code @click="copyHash" :title="copied ? 'Copié' : 'Cliquer pour copier'">{{ signedResult.hash }}</code>
-                <span v-if="copied" class="copied-indicator">✓ copié</span>
+                <span v-if="copied" class="copied-indicator">copié</span>
               </div>
               <p class="hint">
-                Conservez cette empreinte : elle permettra à n'importe qui de vérifier que le document n'a pas été modifié depuis sa signature.
+                Conservez cette empreinte SHA-256 pour les vérifications d'intégrité ultérieures.
               </p>
             </div>
           </div>
@@ -95,11 +92,10 @@
       <CryptoDemo />
     </section>
 
-    <!-- Footer (slot "footer") -->
     <template #footer>
       <span class="footer-brand">Sealmark</span>
       <span class="footer-sep">·</span>
-      <span class="footer-claim">Traitement local, sans téléversement</span>
+      <span class="footer-claim">Traitement local, pas d'envoi serveur</span>
     </template>
   </ThemeBoundary>
 </template>
@@ -120,13 +116,12 @@ import {
   generateDocumentHash
 } from './services/pdf-service.js'
 
-// Active le store thématique (provide/inject) au niveau racine.
 provideTheme()
 
 const tabs = [
-  { id: 'sign', label: 'Signer un document' },
-  { id: 'verify', label: 'Vérifier l\'intégrité' },
-  { id: 'crypto', label: 'Coffre-fort de texte' }
+  { id: 'sign', label: 'Signer' },
+  { id: 'verify', label: 'Vérifier' },
+  { id: 'crypto', label: 'Chiffrer' }
 ]
 
 const activeTab = ref('sign')
@@ -149,7 +144,7 @@ async function loadSample() {
   try {
     const response = await fetch('/sample.pdf')
     if (!response.ok) {
-      errorMessage.value = "Aucun PDF d'exemple disponible. Téléversez votre propre fichier."
+      errorMessage.value = "Pas de PDF d'exemple disponible. Chargez votre propre fichier."
       return
     }
     const blob = await response.blob()
@@ -158,7 +153,7 @@ async function loadSample() {
     signaturePosition.value = null
     errorMessage.value = ''
   } catch (e) {
-    errorMessage.value = `Erreur de chargement de l'exemple : ${e.message}`
+    errorMessage.value = `Chargement impossible : ${e.message}`
   }
 }
 
@@ -192,7 +187,7 @@ async function signPdf() {
     const hash = await generateDocumentHash(signedBlob)
     signedResult.value = { blob: signedBlob, hash }
   } catch (e) {
-    errorMessage.value = `Erreur lors de la signature : ${e.message}`
+    errorMessage.value = `Échec de la signature : ${e.message}`
   } finally {
     processing.value = false
   }
@@ -236,7 +231,7 @@ function formatSize(bytes) {
 </script>
 
 <style>
-/* Styles globaux non scopés (pour fonctionner à travers les Layouts qui consomment les slots) */
+/* Non scopé : ces styles doivent traverser les Layouts des thèmes via leurs slots. */
 .panel-section {
   display: flex;
   flex-direction: column;

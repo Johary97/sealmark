@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Sealmark — Sign PDF documents, seal them with a SHA-256 fingerprint, and verify their integrity. End-to-end client-side: no upload, no server.",
+  "description": "Sealmark — Signature PDF dans le navigateur, empreinte SHA-256 et vérification d'intégrité. Traitement client.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

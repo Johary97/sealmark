@@ -106,11 +106,11 @@ export function percentToPdfPosition(percentCoords, options = {}) {
     : percentCoords.y
 
   if (isNaN(xPercent) || isNaN(yPercent)) {
-    throw new Error('Les coordonnées doivent être des nombres valides')
+    throw new Error('Coordonnées non numériques')
   }
 
   if (xPercent < 0 || xPercent > 100 || yPercent < 0 || yPercent > 100) {
-    throw new Error('Les pourcentages doivent être entre 0 et 100')
+    throw new Error('Pourcentages hors de l\'intervalle 0–100')
   }
 
   const x = (xPercent / 100) * pageWidth
@@ -150,12 +150,13 @@ export function pdfPositionToPercent(pdfPosition, options = {}) {
 
 export function encryptText(text, password) {
   if (!text || !password) {
-    throw new Error('Le texte et le mot de passe sont requis')
+    throw new Error('Texte et mot de passe requis')
   }
   if (typeof text !== 'string' || typeof password !== 'string') {
-    throw new Error('Le texte et le mot de passe doivent être des chaînes de caractères')
+    throw new Error('Texte et mot de passe doivent être des chaînes')
   }
 
+  // Sel et IV générés à chaque appel — ne JAMAIS les réutiliser pour AES-CBC + PBKDF2.
   const salt = CryptoJS.lib.WordArray.random(16)
   const iv = CryptoJS.lib.WordArray.random(16)
 
@@ -182,7 +183,7 @@ export function encryptText(text, password) {
 
 export function decryptText(encryptedData, password) {
   if (!encryptedData || !password) {
-    throw new Error('Les données chiffrées et le mot de passe sont requis')
+    throw new Error('Données chiffrées et mot de passe requis')
   }
 
   const data = JSON.parse(atob(encryptedData))
@@ -200,6 +201,8 @@ export function decryptText(encryptedData, password) {
     padding: CryptoJS.pad.Pkcs7
   })
 
+  // CryptoJS renvoie une chaîne vide quand le padding PKCS7 ne se déballe pas :
+  // c'est le seul signal disponible pour distinguer un mauvais mot de passe.
   const plain = decrypted.toString(CryptoJS.enc.Utf8)
   if (!plain) {
     throw new Error('Mot de passe incorrect ou données corrompues')
@@ -216,7 +219,7 @@ export async function generateDocumentHash(blob) {
 
 export async function verifyDocumentIntegrity(documentBlob, storedHash) {
   if (!documentBlob || !storedHash) {
-    return { isVerified: false, error: 'Paramètres manquants' }
+    return { isVerified: false, error: 'Document ou empreinte manquant' }
   }
 
   const currentHash = await generateDocumentHash(documentBlob)

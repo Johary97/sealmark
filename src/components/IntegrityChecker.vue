@@ -1,8 +1,8 @@
 <template>
   <div class="integrity-checker">
-    <h2>Vérifier l'intégrité d'un document</h2>
+    <h2>Vérification d'intégrité</h2>
     <p class="muted">
-      Chargez un PDF et l'empreinte SHA-256 qui lui a été associée. Sealmark recalcule l'empreinte localement et confirme si le document est resté intact, à l'octet près.
+      Chargez un PDF et l'empreinte SHA-256 de référence. L'empreinte est recalculée localement puis comparée.
     </p>
 
     <PdfDropzone @file-selected="onFile" />
@@ -12,11 +12,11 @@
     </div>
 
     <div class="hash-input">
-      <label for="expected-hash">Hash SHA-256 attendu</label>
+      <label for="expected-hash">Empreinte SHA-256 attendue</label>
       <textarea
         id="expected-hash"
         v-model="expectedHash"
-        placeholder="ex. 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+        placeholder="64 caractères hexadécimaux"
         rows="2"
       ></textarea>
     </div>
@@ -30,13 +30,13 @@
     <div v-if="result" class="result fade-in-up" :class="result.isVerified ? 'success' : 'failure'">
       <strong v-if="result.error">Erreur : {{ result.error }}</strong>
       <template v-else>
-        <strong>{{ result.isVerified ? '✓ Intégrité confirmée' : '✗ Hash différent — document altéré ou hash incorrect' }}</strong>
+        <strong>{{ result.isVerified ? 'Empreintes identiques' : 'Empreintes différentes' }}</strong>
         <div class="hash-row">
-          <span class="hash-label">Calculé :</span>
+          <span class="hash-label">Calculée :</span>
           <code>{{ result.currentHash }}</code>
         </div>
         <div class="hash-row">
-          <span class="hash-label">Attendu :</span>
+          <span class="hash-label">Attendue :</span>
           <code>{{ result.storedHash }}</code>
         </div>
       </template>

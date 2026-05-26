@@ -95,9 +95,7 @@
   --error-bg: rgba(251, 113, 133, 0.12);
 }
 
-/* ============================================================
-   Composants — signature notariale : serif italic, sceau de cire
-   ============================================================ */
+/* Composants : serif italique, cartouches, sceau de cire. */
 
 :root[data-theme-slug="notary-office"] h1,
 :root[data-theme-slug="notary-office"] h2,
@@ -151,7 +149,7 @@
   box-shadow: var(--shadow-md);
 }
 
-/* Animation signature : « cachet qui se pose » */
+/* Animation : cachet qui s'imprime. */
 @keyframes notary-stamp-down {
   0%   { transform: scale(1.4) rotate(-8deg); opacity: 0; }
   60%  { transform: scale(0.92) rotate(2deg); opacity: 1; }

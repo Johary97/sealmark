@@ -86,8 +86,7 @@ function onPick(s) {
   open.value = false
 }
 
-// Compute dropdown position from trigger rect, auto-flip top/bottom
-// si le menu déborderait sous le viewport (ex. ouverture depuis le FAB en bas).
+// Calcule la position du menu et bascule au-dessus si débordement bas (FAB).
 function computeCoords() {
   if (!rootRef.value) return
   const DROPDOWN_HEIGHT = 280

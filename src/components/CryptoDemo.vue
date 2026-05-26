@@ -1,37 +1,37 @@
 <template>
   <div class="crypto-demo">
-    <h2>Coffre-fort de texte</h2>
+    <h2>Chiffrement de texte</h2>
     <p class="muted">
-      Chiffrez un message avec un mot de passe que vous seul connaissez : protocole AES-256-CBC, dérivation de clé PBKDF2 (100 000 itérations, SHA-256) et vecteur d'initialisation aléatoire à chaque opération. Tout reste sur votre appareil.
+      AES-256-CBC avec dérivation de clé PBKDF2 (100 000 itérations, SHA-256). Sel et IV aléatoires à chaque chiffrement. Traitement local.
     </p>
 
     <div class="grid">
       <div class="panel">
         <label>Mot de passe</label>
-        <input v-model="password" type="text" placeholder="ex. mon-secret-123" />
+        <input v-model="password" type="text" placeholder="mot de passe" />
 
         <label>Texte en clair</label>
-        <textarea v-model="plaintext" rows="6" placeholder="Saisissez le message à chiffrer…"></textarea>
+        <textarea v-model="plaintext" rows="6" placeholder="Message à chiffrer"></textarea>
 
         <div class="actions">
           <button type="button" class="btn btn-primary" :disabled="!plaintext || !password" @click="onEncrypt">
-            Chiffrer →
+            Chiffrer
           </button>
         </div>
       </div>
 
       <div class="panel">
         <label>Texte chiffré (base64)</label>
-        <textarea v-model="ciphertext" rows="6" placeholder="Collez ici un texte chiffré à déchiffrer…"></textarea>
+        <textarea v-model="ciphertext" rows="6" placeholder="Chaîne chiffrée à déchiffrer"></textarea>
 
         <div class="actions">
           <button type="button" class="btn" :disabled="!ciphertext || !password" @click="onDecrypt">
-            ← Déchiffrer
+            Déchiffrer
           </button>
         </div>
 
         <div v-if="decryptedOutput !== null" class="output fade-in-up">
-          <strong>Résultat</strong>
+          <strong>Texte déchiffré</strong>
           <pre>{{ decryptedOutput }}</pre>
         </div>
       </div>

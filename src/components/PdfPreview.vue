@@ -21,7 +21,7 @@
     </div>
 
     <p class="preview-hint">
-      Cliquez sur la page pour positionner la signature. La signature ne sera apposée que sur la <strong>dernière page</strong>.
+      Cliquez pour positionner la signature. Apposition sur la <strong>dernière page</strong> uniquement.
     </p>
   </div>
 </template>

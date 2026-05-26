@@ -1,7 +1,6 @@
 <template>
   <div ref="rootRef" class="app-fab" :class="{ 'is-open': open }">
     <ul class="app-fab__actions" :aria-hidden="!open">
-      <!-- Thème : utilise le ThemeSwitcher complet (avec dropdown auto-flip vers le haut) -->
       <li class="app-fab__action">
         <span class="app-fab__label">Thème</span>
         <div class="app-fab__slot">
@@ -61,7 +60,7 @@ const rootRef = ref(null)
 function onDocMouseDown(e) {
   if (!rootRef.value) return
   if (rootRef.value.contains(e.target)) return
-  // Ignore clics dans le dropdown du ThemeSwitcher (téléporté en body)
+  // Le dropdown du ThemeSwitcher est téléporté dans <body>, donc hors de rootRef.
   if (e.target.closest && e.target.closest('[role="listbox"]')) return
   open.value = false
 }
@@ -140,7 +139,6 @@ onBeforeUnmount(() => {
   letter-spacing: 0.01em;
 }
 .app-fab__slot {
-  /* Conteneur d'ancrage pour le ThemeSwitcher (sa trigger garde son style propre) */
   display: inline-flex;
   background: var(--surface-solid, var(--surface, #fff));
   border-radius: var(--radius-md, 6px);

@@ -21,9 +21,9 @@
         <polyline points="14 2 14 8 20 8" />
       </svg>
       <p class="dropzone-text">
-        <strong>Glissez un fichier PDF</strong> ou cliquez pour parcourir
+        <strong>Déposez un PDF</strong> ou cliquez pour parcourir
       </p>
-      <p class="dropzone-hint">Format accepté : .pdf</p>
+      <p class="dropzone-hint">.pdf uniquement</p>
     </div>
   </div>
 </template>

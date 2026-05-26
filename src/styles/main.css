@@ -1,6 +1,4 @@
-/* ============================================================
-   Theme tokens — aligned with the personal portfolio
-   ============================================================ */
+/* Tokens de base. Surchargés par les thèmes via [data-theme-slug]. */
 
 :root {
   --primary-color: #2980b9;
@@ -76,9 +74,7 @@
   --shadow-modal: 0 25px 50px -12px rgba(15, 23, 42, 0.18);
 }
 
-/* ============================================================
-   Reset & base
-   ============================================================ */
+/* Reset et base */
 
 *,
 *::before,
@@ -134,9 +130,7 @@ pre {
   font-family: var(--font-mono);
 }
 
-/* ============================================================
-   Reusable atoms (used across components)
-   ============================================================ */
+/* Atomes réutilisés (boutons, inputs, badge…) */
 
 .btn {
   padding: 0.625rem 1.25rem;
@@ -232,9 +226,7 @@ textarea:focus {
   font-weight: 500;
 }
 
-/* ============================================================
-   Scrollbar (matches portfolio styling)
-   ============================================================ */
+/* Scrollbar */
 
 ::-webkit-scrollbar {
   width: 12px;
@@ -258,9 +250,7 @@ textarea:focus {
   scrollbar-color: #888 transparent;
 }
 
-/* ============================================================
-   Animations
-   ============================================================ */
+/* Animations */
 
 @keyframes fade-in-up {
   from {

@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import './styles/main.css'
 
-// Tokens des thèmes (scopés via :root[data-theme-slug="..."], inactifs sauf pour le thème actif)
+// Tokens scopés par :root[data-theme-slug="..."] — seul le thème actif s'applique.
 import '@themes/notary-office/tokens.css'
 import '@themes/crypto-vault/tokens.css'
 import '@themes/hand-signed/tokens.css'

@@ -96,9 +96,7 @@
   --error-bg: rgba(253, 164, 175, 0.12);
 }
 
-/* ============================================================
-   Composants — manuscrit : Caveat / Garamond, italic, sépia
-   ============================================================ */
+/* Composants : Caveat / Garamond italique, encre sépia. */
 
 :root[data-theme-slug="hand-signed"] h1,
 :root[data-theme-slug="hand-signed"] h2,
@@ -152,7 +150,7 @@
   box-shadow: var(--shadow-md);
   position: relative;
 }
-/* coins légèrement courbés irréguliers — effet feuille de papier */
+/* Reflet papier sur le bord supérieur. */
 :root[data-theme-slug="hand-signed"] .card::before,
 :root[data-theme-slug="hand-signed"] .result-box::before {
   content: "";
@@ -163,7 +161,7 @@
   pointer-events: none;
 }
 
-/* Animation signature : plume qui écrit + encre qui se pose */
+/* Effet machine à écrire + fondu d'encre. */
 @keyframes hs-typewriter {
   from { width: 0; }
   to   { width: 100%; }

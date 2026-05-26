@@ -26,8 +26,7 @@ function readPersistedMode(defaultMode) {
 }
 
 /**
- * Crée le store thématique et le `provide` au niveau racine.
- * À appeler dans le `setup()` du composant racine (App.vue).
+ * Crée le store de thème et le `provide`. À appeler dans App.vue.
  */
 export function provideTheme() {
   const slug = ref(readPersistedSlug())
@@ -39,7 +38,7 @@ export function provideTheme() {
   const Layout = computed(() => getTheme(slug.value).Layout)
   const availableThemes = computed(() => THEME_LIST)
 
-  // Synchronise DOM + localStorage
+  // Reflet du slug + mode sur <html> + persistance.
   watch(
     [slug, mode],
     ([s, m]) => {
@@ -64,7 +63,6 @@ export function provideTheme() {
 
     if (prefersReducedMotion) {
       slug.value = nextSlug
-      // adopte le mode par défaut du nouveau thème
       const nextManifest = getTheme(nextSlug).manifest
       if (nextManifest?.defaultMode) mode.value = nextManifest.defaultMode
       return
