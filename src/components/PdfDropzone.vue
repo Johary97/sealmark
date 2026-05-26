@@ -21,16 +21,18 @@
         <polyline points="14 2 14 8 20 8" />
       </svg>
       <p class="dropzone-text">
-        <strong>Déposez un PDF</strong> ou cliquez pour parcourir
+        <strong>{{ t('dropzone.drop') }}</strong> {{ t('dropzone.browse') }}
       </p>
-      <p class="dropzone-hint">.pdf uniquement</p>
+      <p class="dropzone-hint">{{ t('dropzone.hint') }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const emit = defineEmits(['file-selected'])
 const isDragging = ref(false)
 

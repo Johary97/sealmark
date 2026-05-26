@@ -4,8 +4,8 @@
       <a href="/" class="no-brand" aria-label="Sealmark">
         <span class="no-seal" aria-hidden="true">S</span>
         <span class="no-brand__text">
-          <span class="no-brand__name">Sealmark</span>
-          <span class="no-brand__sub">étude · signature · sceau</span>
+          <span class="no-brand__name">{{ t('layouts.notaryOffice.brandName') }}</span>
+          <span class="no-brand__sub">{{ t('layouts.notaryOffice.brandSub') }}</span>
         </span>
       </a>
     </div>
@@ -34,7 +34,10 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import AppFab from '@components/AppFab.vue'
+
+const { t } = useI18n()
 </script>
 
 <style scoped>

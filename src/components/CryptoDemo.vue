@@ -1,37 +1,37 @@
 <template>
   <div class="crypto-demo">
-    <h2>Chiffrement de texte</h2>
+    <h2>{{ t('crypto.title') }}</h2>
     <p class="muted">
-      AES-256-CBC avec dérivation de clé PBKDF2 (100 000 itérations, SHA-256). Sel et IV aléatoires à chaque chiffrement. Traitement local.
+      {{ t('crypto.lede') }}
     </p>
 
     <div class="grid">
       <div class="panel">
-        <label>Mot de passe</label>
-        <input v-model="password" type="text" placeholder="mot de passe" />
+        <label>{{ t('crypto.passwordLabel') }}</label>
+        <input v-model="password" type="text" :placeholder="t('crypto.passwordPlaceholder')" />
 
-        <label>Texte en clair</label>
-        <textarea v-model="plaintext" rows="6" placeholder="Message à chiffrer"></textarea>
+        <label>{{ t('crypto.plaintextLabel') }}</label>
+        <textarea v-model="plaintext" rows="6" :placeholder="t('crypto.plaintextPlaceholder')"></textarea>
 
         <div class="actions">
           <button type="button" class="btn btn-primary" :disabled="!plaintext || !password" @click="onEncrypt">
-            Chiffrer
+            {{ t('crypto.encrypt') }}
           </button>
         </div>
       </div>
 
       <div class="panel">
-        <label>Texte chiffré (base64)</label>
-        <textarea v-model="ciphertext" rows="6" placeholder="Chaîne chiffrée à déchiffrer"></textarea>
+        <label>{{ t('crypto.ciphertextLabel') }}</label>
+        <textarea v-model="ciphertext" rows="6" :placeholder="t('crypto.ciphertextPlaceholder')"></textarea>
 
         <div class="actions">
           <button type="button" class="btn" :disabled="!ciphertext || !password" @click="onDecrypt">
-            Déchiffrer
+            {{ t('crypto.decrypt') }}
           </button>
         </div>
 
         <div v-if="decryptedOutput !== null" class="output fade-in-up">
-          <strong>Texte déchiffré</strong>
+          <strong>{{ t('crypto.decryptedLabel') }}</strong>
           <pre>{{ decryptedOutput }}</pre>
         </div>
       </div>
@@ -43,7 +43,10 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { encryptText, decryptText } from '../services/pdf-service.js'
+
+const { t } = useI18n()
 
 const password = ref('')
 const plaintext = ref('')

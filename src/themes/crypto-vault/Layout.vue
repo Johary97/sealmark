@@ -3,7 +3,7 @@
     <div class="cv-header__inner">
       <a href="/" class="cv-brand">
         <span class="cv-prompt">[SEALMARK]</span>
-        <span class="cv-status">// integrity engine v1.0</span>
+        <span class="cv-status">// sha-256 · aes-256</span>
       </a>
     </div>
     <div class="cv-hero">

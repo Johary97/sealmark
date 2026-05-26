@@ -2,8 +2,8 @@
   <header class="hs-header">
     <div class="hs-header__inner">
       <a href="/" class="hs-brand">
-        <span class="hs-brand__script">Sealmark</span>
-        <span class="hs-brand__sub">— une lettre, scellée par vos soins</span>
+        <span class="hs-brand__script">{{ t('layouts.handSigned.brandName') }}</span>
+        <span class="hs-brand__sub">{{ t('layouts.handSigned.brandSub') }}</span>
       </a>
     </div>
     <div class="hs-hero">
@@ -20,10 +20,6 @@
   <main class="hs-paper">
     <div class="hs-paper__sheet">
       <slot />
-      <div class="hs-paper__signoff">
-        <span class="hs-paper__closing">Fait avec soin,</span>
-        <span class="hs-paper__author">l'auteur</span>
-      </div>
     </div>
   </main>
 
@@ -37,7 +33,10 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import AppFab from '@components/AppFab.vue'
+
+const { t } = useI18n()
 </script>
 
 <style scoped>
@@ -129,27 +128,6 @@ import AppFab from '@components/AppFab.vue'
   box-shadow: var(--shadow-md);
   position: relative;
 }
-.hs-paper__signoff {
-  margin-top: 2.5rem;
-  text-align: right;
-  font-family: var(--font-serif);
-  font-style: italic;
-  color: var(--text-muted);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.25rem;
-}
-.hs-paper__closing {
-  font-size: 0.95rem;
-}
-.hs-paper__author {
-  font-family: var(--font-script);
-  font-size: 1.6rem;
-  color: var(--primary-color);
-  line-height: 1;
-}
-
 .hs-footer {
   border-top: 1px solid var(--border-color);
   background: var(--surface);

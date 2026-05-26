@@ -1,9 +1,9 @@
 <template>
   <ThemeBoundary>
     <template #header>
-      <h1>Signature PDF<br />et empreinte SHA-256.</h1>
+      <h1>{{ t('home.title') }}<br />{{ t('home.titleBreak') }}</h1>
       <p class="tagline">
-        Apposez une signature manuscrite sur un PDF, calculez son empreinte SHA-256, vérifiez l'intégrité plus tard. Traitement local.
+        {{ t('home.lede') }}
       </p>
     </template>
 
@@ -14,27 +14,27 @@
         :class="['tab-btn', { active: activeTab === tab.id }]"
         @click="activeTab = tab.id"
       >
-        {{ tab.label }}
+        {{ t(tab.labelKey) }}
       </button>
     </template>
 
     <section v-if="activeTab === 'sign'" class="panel-section fade-in-up">
-      <h2 class="section-step">1. Document</h2>
+      <h2 class="section-step">{{ t('sign.stepDocument') }}</h2>
       <div v-if="!pdfFile">
         <PdfDropzone @file-selected="onPdfSelected" />
         <p class="hint">
-          Pas de fichier ? <a href="#" @click.prevent="loadSample">Charger un PDF d'exemple</a>.
+          <a href="#" @click.prevent="loadSample">{{ t('home.loadSample') }}</a>
         </p>
       </div>
       <div v-else class="loaded-file">
         <span><strong>{{ pdfFile.name }}</strong> · {{ formatSize(pdfFile.size) }}</span>
-        <button type="button" class="link-btn" @click="resetAll">Changer de fichier</button>
+        <button type="button" class="link-btn" @click="resetAll">{{ t('sign.changeFile') }}</button>
       </div>
 
       <template v-if="pdfFile">
         <div class="split">
           <div class="split-left">
-            <h2 class="section-step">2. Emplacement</h2>
+            <h2 class="section-step">{{ t('sign.stepLocation') }}</h2>
             <div class="cv-scanline-host">
               <PdfPreview
                 :pdf-file="pdfFile"
@@ -46,7 +46,7 @@
           </div>
 
           <div class="split-right">
-            <h2 class="section-step">3. Signature</h2>
+            <h2 class="section-step">{{ t('sign.stepSignature') }}</h2>
             <SignaturePad
               @signature-save="onSignatureSave"
               @signature-clear="signatureDataUrl = null"
@@ -60,21 +60,21 @@
                 :disabled="!signatureDataUrl || !signaturePosition || processing"
                 @click="signPdf"
               >
-                {{ processing ? 'Signature en cours…' : '4. Signer et télécharger' }}
+                {{ processing ? t('sign.processing') : t('sign.actionSign') }}
               </button>
             </div>
 
             <div v-if="signedResult" class="result-box fade-in-up notary-stamp">
-              <p class="result-title">Document signé</p>
-              <button type="button" class="btn btn-primary" @click="downloadSigned">Télécharger le PDF signé</button>
+              <p class="result-title">{{ t('sign.documentSigned') }}</p>
+              <button type="button" class="btn btn-primary" @click="downloadSigned">{{ t('sign.downloadSigned') }}</button>
 
               <div class="hash-display">
-                <span class="badge">Empreinte</span>
-                <code @click="copyHash" :title="copied ? 'Copié' : 'Cliquer pour copier'">{{ signedResult.hash }}</code>
-                <span v-if="copied" class="copied-indicator">copié</span>
+                <span class="badge">{{ t('sign.hashBadge') }}</span>
+                <code @click="copyHash" :title="copied ? t('sign.copied') : t('sign.copyHint')">{{ signedResult.hash }}</code>
+                <span v-if="copied" class="copied-indicator">{{ t('sign.copiedShort') }}</span>
               </div>
               <p class="hint">
-                Conservez cette empreinte SHA-256 pour les vérifications d'intégrité ultérieures.
+                {{ t('sign.hashHint') }}
               </p>
             </div>
           </div>
@@ -93,15 +93,21 @@
     </section>
 
     <template #footer>
-      <span class="footer-brand">Sealmark</span>
-      <span class="footer-sep">·</span>
-      <span class="footer-claim">Traitement local, pas d'envoi serveur</span>
+      <div class="footer-row">
+        <span class="footer-brand">{{ t('footer.brand') }}</span>
+        <span class="footer-sep">·</span>
+        <span class="footer-claim">{{ t('footer.claim') }}</span>
+      </div>
+      <div class="footer-copyright">
+        © 2026 — Johary ANDRIANJAFIMANOHISOLO · Développeur Informatique
+      </div>
     </template>
   </ThemeBoundary>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import PdfDropzone from './components/PdfDropzone.vue'
 import PdfPreview from './components/PdfPreview.vue'
 import SignaturePad from './components/SignaturePad.vue'
@@ -117,11 +123,12 @@ import {
 } from './services/pdf-service.js'
 
 provideTheme()
+const { t } = useI18n()
 
 const tabs = [
-  { id: 'sign', label: 'Signer' },
-  { id: 'verify', label: 'Vérifier' },
-  { id: 'crypto', label: 'Chiffrer' }
+  { id: 'sign', labelKey: 'tabs.sign' },
+  { id: 'verify', labelKey: 'tabs.verify' },
+  { id: 'crypto', labelKey: 'tabs.crypto' }
 ]
 
 const activeTab = ref('sign')
@@ -144,7 +151,7 @@ async function loadSample() {
   try {
     const response = await fetch('/sample.pdf')
     if (!response.ok) {
-      errorMessage.value = "Pas de PDF d'exemple disponible. Chargez votre propre fichier."
+      errorMessage.value = t('home.noSample')
       return
     }
     const blob = await response.blob()
@@ -153,7 +160,7 @@ async function loadSample() {
     signaturePosition.value = null
     errorMessage.value = ''
   } catch (e) {
-    errorMessage.value = `Chargement impossible : ${e.message}`
+    errorMessage.value = t('home.loadFailed', { message: e.message })
   }
 }
 
@@ -187,7 +194,7 @@ async function signPdf() {
     const hash = await generateDocumentHash(signedBlob)
     signedResult.value = { blob: signedBlob, hash }
   } catch (e) {
-    errorMessage.value = `Échec de la signature : ${e.message}`
+    errorMessage.value = t('home.signFailed', { message: e.message })
   } finally {
     processing.value = false
   }
@@ -364,6 +371,12 @@ function formatSize(bytes) {
   font-size: 0.85rem;
 }
 
+.footer-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
 .footer-brand {
   font-family: var(--font-mono);
   font-weight: 700;
@@ -374,6 +387,16 @@ function formatSize(bytes) {
   color: var(--color-subtle, var(--text-muted));
 }
 .footer-claim {
-  font-style: italic;
+  color: var(--color-muted, var(--text-muted));
+}
+.footer-copyright {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-soft, rgba(127, 127, 127, 0.12));
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-subtle, var(--text-muted));
 }
 </style>

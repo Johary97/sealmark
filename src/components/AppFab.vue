@@ -3,7 +3,7 @@
   <div ref="rootRef" class="app-fab" :class="{ 'is-open': open }">
     <ul class="app-fab__actions" :aria-hidden="!open">
       <li class="app-fab__action">
-        <span class="app-fab__label">Thème</span>
+        <span class="app-fab__label">{{ t('header.themeLabel') }}</span>
         <div class="app-fab__slot">
           <ThemeSwitcher />
         </div>
@@ -11,11 +11,11 @@
 
       <!-- Mode clair / sombre -->
       <li class="app-fab__action">
-        <span class="app-fab__label">{{ mode === 'dark' ? 'Mode clair' : 'Mode sombre' }}</span>
+        <span class="app-fab__label">{{ mode === 'dark' ? t('header.modeLight') : t('header.modeDark') }}</span>
         <button
           type="button"
           class="app-fab__btn"
-          :aria-label="mode === 'dark' ? 'Mode clair' : 'Mode sombre'"
+          :aria-label="mode === 'dark' ? t('header.modeLight') : t('header.modeDark')"
           @click="toggleMode"
         >
           <svg v-if="mode === 'dark'" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -27,6 +27,19 @@
           </svg>
         </button>
       </li>
+
+      <!-- Langue FR / EN -->
+      <li class="app-fab__action">
+        <span class="app-fab__label">{{ nextLangLabel }}</span>
+        <button
+          type="button"
+          class="app-fab__btn app-fab__btn--lang"
+          :aria-label="t('header.languageToggle')"
+          @click="switchLang"
+        >
+          <span class="app-fab__lang">{{ currentLangCode }}</span>
+        </button>
+      </li>
     </ul>
 
     <button
@@ -34,7 +47,7 @@
       class="app-fab__trigger"
       :aria-expanded="open"
       aria-haspopup="menu"
-      aria-label="Paramètres"
+      :aria-label="t('header.settings')"
       @click="open = !open"
     >
       <svg v-if="!open" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -51,13 +64,23 @@
 </template>
 
 <script setup>
-import { ref, watch, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onBeforeUnmount } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useTheme } from '@theme/useTheme.js'
+import { setLocale } from '@i18n'
 import ThemeSwitcher from '@theme/ThemeSwitcher.vue'
 
+const { t, locale } = useI18n()
 const { mode, toggleMode } = useTheme()
 const open = ref(false)
 const rootRef = ref(null)
+
+const currentLangCode = computed(() => (locale.value === 'en' ? 'EN' : 'FR'))
+const nextLangLabel = computed(() => (locale.value === 'en' ? 'Français' : 'English'))
+
+function switchLang() {
+  setLocale(locale.value === 'en' ? 'fr' : 'en')
+}
 
 function onDocMouseDown(e) {
   if (!rootRef.value) return
@@ -162,6 +185,18 @@ onBeforeUnmount(() => {
 .app-fab__btn {
   width: 2.75rem;
   height: 2.75rem;
+}
+.app-fab__btn--lang {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.app-fab__lang {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 .app-fab__trigger {
   width: 3rem;

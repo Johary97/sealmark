@@ -20,7 +20,7 @@
           <div class="resize-handle edge-w" @mousedown="startResize($event, 'w')"></div>
 
           <div v-if="isEmpty" class="dessin-title">
-            Tracez votre signature ici
+            {{ t('signaturePad.label') }}
           </div>
         </div>
       </div>
@@ -28,7 +28,7 @@
       <div class="signature-controls">
         <div class="control-row">
           <div class="control-item">
-            <label>Couleur</label>
+            <label>{{ t('signaturePad.color') }}</label>
             <input type="color" v-model="strokeColor" @change="updateStrokeColor" class="color-input">
             <div class="preset-colors-inline">
               <span
@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="control-item">
-            <label>Épaisseur</label>
+            <label>{{ t('signaturePad.thickness') }}</label>
             <input type="range" v-model.number="strokeWidth" min="0.5" max="10" step="0.5" @input="updateStrokeWidth" class="range-input">
             <span class="range-value">{{ strokeWidth }}px</span>
           </div>
@@ -51,15 +51,18 @@
     </div>
 
     <div class="signature-actions">
-      <button type="button" class="btn" @click="clearSignature">Effacer</button>
-      <button type="button" class="btn btn-primary" @click="saveSignature">Appliquer</button>
+      <button type="button" class="btn" @click="clearSignature">{{ t('signaturePad.clear') }}</button>
+      <button type="button" class="btn btn-primary" @click="saveSignature">{{ t('signaturePad.apply') }}</button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 import SignaturePad from 'signature_pad'
+
+const { t } = useI18n()
 
 const props = defineProps({
   initialWidth: { type: Number, default: 400 },
@@ -132,7 +135,7 @@ function clearSignature() {
 
 function saveSignature() {
   if (!signaturePad || signaturePad.isEmpty()) {
-    emit('signature-error', 'Le pavé est vide')
+    emit('signature-error', t('signaturePad.empty'))
     return null
   }
 
@@ -141,7 +144,7 @@ function saveSignature() {
     emit('signature-save', signatureData)
     return signatureData
   } catch (error) {
-    emit('signature-error', 'Export PNG impossible')
+    emit('signature-error', t('signaturePad.exportFailed'))
     return null
   }
 }

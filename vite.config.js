@@ -11,7 +11,8 @@ export default defineConfig({
       '@services': path.resolve(__dirname, 'src/services'),
       '@styles': path.resolve(__dirname, 'src/styles'),
       '@theme': path.resolve(__dirname, 'src/theme'),
-      '@themes': path.resolve(__dirname, 'src/themes')
+      '@themes': path.resolve(__dirname, 'src/themes'),
+      '@i18n': path.resolve(__dirname, 'src/i18n')
     }
   },
   optimizeDeps: {

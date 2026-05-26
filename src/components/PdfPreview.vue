@@ -1,10 +1,10 @@
 <template>
   <div class="pdf-preview">
     <div class="preview-header">
-      <span class="page-label">Page {{ currentPage }} / {{ totalPages }}</span>
+      <span class="page-label">{{ t('preview.page', { current: currentPage, total: totalPages }) }}</span>
       <div class="page-nav">
-        <button type="button" class="btn-nav" :disabled="currentPage <= 1" @click="goPrev">‹</button>
-        <button type="button" class="btn-nav" :disabled="currentPage >= totalPages" @click="goNext">›</button>
+        <button type="button" class="btn-nav" :aria-label="t('preview.prevPage')" :disabled="currentPage <= 1" @click="goPrev">‹</button>
+        <button type="button" class="btn-nav" :aria-label="t('preview.nextPage')" :disabled="currentPage >= totalPages" @click="goNext">›</button>
       </div>
     </div>
 
@@ -21,16 +21,20 @@
     </div>
 
     <p class="preview-hint">
-      Cliquez pour positionner la signature. Apposition sur la <strong>dernière page</strong> uniquement.
+      <i18n-t keypath="preview.positionHint" tag="span">
+        <template #lastPage><strong>{{ t('preview.lastPage') }}</strong></template>
+      </i18n-t>
     </p>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, watch, onBeforeUnmount } from 'vue'
+import { useI18n } from 'vue-i18n'
 import * as pdfjsLib from 'pdfjs-dist/build/pdf.mjs'
 import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url'
 
+const { t } = useI18n()
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl
 
 const props = defineProps({

@@ -1,42 +1,42 @@
 <template>
   <div class="integrity-checker">
-    <h2>Vérification d'intégrité</h2>
+    <h2>{{ t('integrity.title') }}</h2>
     <p class="muted">
-      Chargez un PDF et l'empreinte SHA-256 de référence. L'empreinte est recalculée localement puis comparée.
+      {{ t('integrity.lede') }}
     </p>
 
     <PdfDropzone @file-selected="onFile" />
 
     <div v-if="file" class="file-info">
-      <strong>Fichier :</strong> {{ file.name }} ({{ formatSize(file.size) }})
+      <strong>{{ t('integrity.fileLabel') }}</strong> {{ file.name }} ({{ formatSize(file.size) }})
     </div>
 
     <div class="hash-input">
-      <label for="expected-hash">Empreinte SHA-256 attendue</label>
+      <label for="expected-hash">{{ t('integrity.expectedLabel') }}</label>
       <textarea
         id="expected-hash"
         v-model="expectedHash"
-        placeholder="64 caractères hexadécimaux"
+        :placeholder="t('integrity.expectedPlaceholder')"
         rows="2"
       ></textarea>
     </div>
 
     <div class="actions">
       <button type="button" class="btn btn-primary" :disabled="!file || !expectedHash" @click="verify">
-        Vérifier
+        {{ t('integrity.verify') }}
       </button>
     </div>
 
     <div v-if="result" class="result fade-in-up" :class="result.isVerified ? 'success' : 'failure'">
-      <strong v-if="result.error">Erreur : {{ result.error }}</strong>
+      <strong v-if="result.error">{{ t('integrity.error', { message: result.error }) }}</strong>
       <template v-else>
-        <strong>{{ result.isVerified ? 'Empreintes identiques' : 'Empreintes différentes' }}</strong>
+        <strong>{{ result.isVerified ? t('integrity.match') : t('integrity.mismatch') }}</strong>
         <div class="hash-row">
-          <span class="hash-label">Calculée :</span>
+          <span class="hash-label">{{ t('integrity.computedLabel') }}</span>
           <code>{{ result.currentHash }}</code>
         </div>
         <div class="hash-row">
-          <span class="hash-label">Attendue :</span>
+          <span class="hash-label">{{ t('integrity.expectedLabelShort') }}</span>
           <code>{{ result.storedHash }}</code>
         </div>
       </template>
@@ -46,8 +46,11 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import PdfDropzone from './PdfDropzone.vue'
 import { verifyDocumentIntegrity } from '../services/pdf-service.js'
+
+const { t } = useI18n()
 
 const file = ref(null)
 const expectedHash = ref('')

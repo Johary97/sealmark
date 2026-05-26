@@ -5,7 +5,7 @@
       class="theme-switcher__trigger"
       :aria-haspopup="'listbox'"
       :aria-expanded="open"
-      :title="active?.name || 'Choisir le thème'"
+      :title="activeName || t('theme.switcher.label')"
       @click="open = !open"
     >
       <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -15,7 +15,7 @@
         <circle cx="6.5" cy="12.5" r=".5" />
         <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
       </svg>
-      <span class="theme-switcher__label">{{ active?.name }}</span>
+      <span class="theme-switcher__label">{{ activeName }}</span>
     </button>
 
     <Teleport to="body">
@@ -24,7 +24,7 @@
         ref="dropdownRef"
         role="listbox"
         class="theme-switcher__menu"
-        aria-label="Choisir le thème"
+        :aria-label="t('theme.switcher.label')"
         :style="dropdownStyle"
       >
         <button
@@ -39,12 +39,12 @@
           <span class="theme-switcher__swatch" :style="{ background: m.swatch }" aria-hidden="true" />
           <span class="theme-switcher__text">
             <span class="theme-switcher__name">
-              {{ m.name }}
+              {{ m.nameKey ? t(m.nameKey) : m.name }}
               <svg v-if="m.slug === slug" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </span>
-            <span class="theme-switcher__desc">{{ m.description }}</span>
+            <span class="theme-switcher__desc">{{ m.descKey ? t(m.descKey) : m.description }}</span>
           </span>
         </button>
       </div>
@@ -54,8 +54,10 @@
 
 <script setup>
 import { ref, computed, onBeforeUnmount, watch, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useTheme } from './useTheme.js'
 
+const { t } = useI18n()
 const { slug, availableThemes, switchTheme } = useTheme()
 const open = ref(false)
 const rootRef = ref(null)
@@ -65,6 +67,11 @@ const coords = ref(null)
 const active = computed(
   () => availableThemes.value.find((m) => m.slug === slug.value) || availableThemes.value[0]
 )
+const activeName = computed(() => {
+  const a = active.value
+  if (!a) return ''
+  return a.nameKey ? t(a.nameKey) : a.name
+})
 
 const dropdownStyle = computed(() => {
   if (!coords.value) return { visibility: 'hidden' }

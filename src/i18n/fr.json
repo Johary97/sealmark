@@ -1,0 +1,130 @@
+{
+  "common": {
+    "loading": "Chargement…",
+    "back": "Retour",
+    "close": "Fermer",
+    "cancel": "Annuler"
+  },
+  "header": {
+    "title": "Sealmark",
+    "subtitle": "Signature PDF",
+    "subtitleLong": "Signature PDF + intégrité SHA-256",
+    "settings": "Paramètres",
+    "themeLabel": "Thème",
+    "themeToggle": "Basculer clair / sombre",
+    "modeLight": "Mode clair",
+    "modeDark": "Mode sombre",
+    "languageToggle": "Changer de langue"
+  },
+  "theme": {
+    "switcher": {
+      "label": "Choisir le thème",
+      "trigger": "Thème"
+    }
+  },
+  "home": {
+    "title": "Signature PDF",
+    "titleBreak": "et empreinte SHA-256.",
+    "lede": "Apposition d'une signature manuscrite sur un PDF, calcul de l'empreinte SHA-256 du document signé, vérification d'intégrité ultérieure. Traitement local.",
+    "loadSample": "Charger un PDF d'exemple",
+    "noSample": "Aucun PDF d'exemple disponible.",
+    "loadFailed": "Chargement impossible : {message}",
+    "signFailed": "Échec de la signature : {message}"
+  },
+  "tabs": {
+    "sign": "Signer",
+    "verify": "Vérifier",
+    "crypto": "Chiffrer"
+  },
+  "sign": {
+    "stepDocument": "1. Document",
+    "stepLocation": "2. Emplacement",
+    "stepSignature": "3. Signature",
+    "actionSign": "4. Signer et télécharger",
+    "processing": "Signature en cours…",
+    "changeFile": "Changer de fichier",
+    "documentSigned": "Document signé",
+    "downloadSigned": "Télécharger le PDF signé",
+    "hashBadge": "Empreinte",
+    "hashHint": "Empreinte SHA-256 à conserver pour la vérification d'intégrité ultérieure.",
+    "copyHint": "Cliquer pour copier",
+    "copied": "Copié",
+    "copiedShort": "copié"
+  },
+  "dropzone": {
+    "drop": "Déposer un PDF",
+    "browse": "ou cliquer pour parcourir",
+    "hint": ".pdf uniquement"
+  },
+  "signaturePad": {
+    "label": "Zone de tracé",
+    "color": "Couleur",
+    "thickness": "Épaisseur",
+    "clear": "Effacer",
+    "apply": "Appliquer",
+    "empty": "Signature vide",
+    "exportFailed": "Export PNG impossible"
+  },
+  "preview": {
+    "page": "Page {current} / {total}",
+    "prevPage": "Page précédente",
+    "nextPage": "Page suivante",
+    "positionHint": "Sélection de la position par clic. Apposition sur la {lastPage} uniquement.",
+    "lastPage": "dernière page"
+  },
+  "integrity": {
+    "title": "Vérification d'intégrité",
+    "lede": "Comparaison de l'empreinte SHA-256 d'un PDF avec une empreinte de référence. Calcul local.",
+    "fileLabel": "Fichier :",
+    "expectedLabel": "Empreinte SHA-256 attendue",
+    "expectedPlaceholder": "64 caractères hexadécimaux",
+    "verify": "Vérifier",
+    "match": "Empreintes identiques",
+    "mismatch": "Empreintes différentes",
+    "error": "Erreur : {message}",
+    "computedLabel": "Calculée :",
+    "expectedLabelShort": "Attendue :"
+  },
+  "crypto": {
+    "title": "Chiffrement de texte",
+    "lede": "AES-256-CBC avec dérivation de clé PBKDF2 (100 000 itérations, SHA-256). Sel et IV aléatoires à chaque chiffrement. Traitement local.",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "mot de passe",
+    "plaintextLabel": "Texte en clair",
+    "plaintextPlaceholder": "Message à chiffrer",
+    "encrypt": "Chiffrer",
+    "ciphertextLabel": "Texte chiffré (base64)",
+    "ciphertextPlaceholder": "Chaîne chiffrée à déchiffrer",
+    "decrypt": "Déchiffrer",
+    "decryptedLabel": "Texte déchiffré"
+  },
+  "footer": {
+    "brand": "Sealmark",
+    "claim": "Traitement local, pas d'envoi serveur",
+    "copyright": "© 2026 — Johary ANDRIANJAFIMANOHISOLO · Développeur Informatique"
+  },
+  "themes": {
+    "notaryOffice": {
+      "label": "Notary Office",
+      "description": "Palette papier vélin, sceau vert sapin, accents ambre. Mode clair par défaut."
+    },
+    "cryptoVault": {
+      "label": "Crypto Vault",
+      "description": "Fond noir profond, accent vert phosphore, typographie monospace. Mode sombre par défaut."
+    },
+    "handSigned": {
+      "label": "Hand Signed",
+      "description": "Palette papier crème, accents sépia et bordeaux, typographie sérif. Mode clair par défaut."
+    }
+  },
+  "layouts": {
+    "notaryOffice": {
+      "brandName": "Sealmark",
+      "brandSub": "Signature PDF"
+    },
+    "handSigned": {
+      "brandName": "Sealmark",
+      "brandSub": "Signature PDF"
+    }
+  }
+}

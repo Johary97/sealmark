@@ -1,0 +1,130 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "back": "Back",
+    "close": "Close",
+    "cancel": "Cancel"
+  },
+  "header": {
+    "title": "Sealmark",
+    "subtitle": "PDF signing",
+    "subtitleLong": "PDF signing + SHA-256 integrity",
+    "settings": "Settings",
+    "themeLabel": "Theme",
+    "themeToggle": "Toggle light / dark",
+    "modeLight": "Light mode",
+    "modeDark": "Dark mode",
+    "languageToggle": "Change language"
+  },
+  "theme": {
+    "switcher": {
+      "label": "Pick a theme",
+      "trigger": "Theme"
+    }
+  },
+  "home": {
+    "title": "PDF signing",
+    "titleBreak": "with SHA-256 hash.",
+    "lede": "Apply a handwritten signature to a PDF, compute the SHA-256 hash of the signed document, verify integrity later. Local processing.",
+    "loadSample": "Load a sample PDF",
+    "noSample": "No sample PDF available.",
+    "loadFailed": "Load failed: {message}",
+    "signFailed": "Signing failed: {message}"
+  },
+  "tabs": {
+    "sign": "Sign",
+    "verify": "Verify",
+    "crypto": "Encrypt"
+  },
+  "sign": {
+    "stepDocument": "1. Document",
+    "stepLocation": "2. Placement",
+    "stepSignature": "3. Signature",
+    "actionSign": "4. Sign and download",
+    "processing": "Signing…",
+    "changeFile": "Change file",
+    "documentSigned": "Document signed",
+    "downloadSigned": "Download signed PDF",
+    "hashBadge": "Hash",
+    "hashHint": "Keep the SHA-256 hash for later integrity verification.",
+    "copyHint": "Click to copy",
+    "copied": "Copied",
+    "copiedShort": "copied"
+  },
+  "dropzone": {
+    "drop": "Drop a PDF",
+    "browse": "or click to browse",
+    "hint": ".pdf only"
+  },
+  "signaturePad": {
+    "label": "Drawing area",
+    "color": "Color",
+    "thickness": "Thickness",
+    "clear": "Clear",
+    "apply": "Apply",
+    "empty": "Signature is empty",
+    "exportFailed": "PNG export failed"
+  },
+  "preview": {
+    "page": "Page {current} / {total}",
+    "prevPage": "Previous page",
+    "nextPage": "Next page",
+    "positionHint": "Click to set position. Applied on the {lastPage} only.",
+    "lastPage": "last page"
+  },
+  "integrity": {
+    "title": "Integrity check",
+    "lede": "Compare a PDF's SHA-256 hash against a reference value. Local computation.",
+    "fileLabel": "File:",
+    "expectedLabel": "Expected SHA-256 hash",
+    "expectedPlaceholder": "64 hexadecimal characters",
+    "verify": "Verify",
+    "match": "Hashes match",
+    "mismatch": "Hashes differ",
+    "error": "Error: {message}",
+    "computedLabel": "Computed:",
+    "expectedLabelShort": "Expected:"
+  },
+  "crypto": {
+    "title": "Text encryption",
+    "lede": "AES-256-CBC with PBKDF2 key derivation (100,000 iterations, SHA-256). Random salt and IV on every encryption. Local processing.",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "password",
+    "plaintextLabel": "Plain text",
+    "plaintextPlaceholder": "Message to encrypt",
+    "encrypt": "Encrypt",
+    "ciphertextLabel": "Ciphertext (base64)",
+    "ciphertextPlaceholder": "Encrypted string to decrypt",
+    "decrypt": "Decrypt",
+    "decryptedLabel": "Decrypted text"
+  },
+  "footer": {
+    "brand": "Sealmark",
+    "claim": "Local processing, no server upload",
+    "copyright": "© 2026 — Johary ANDRIANJAFIMANOHISOLO · Software developer"
+  },
+  "themes": {
+    "notaryOffice": {
+      "label": "Notary Office",
+      "description": "Vellum paper palette, forest-green seal, amber accents. Light mode by default."
+    },
+    "cryptoVault": {
+      "label": "Crypto Vault",
+      "description": "Deep black background, phosphor green accent, monospace typography. Dark mode by default."
+    },
+    "handSigned": {
+      "label": "Hand Signed",
+      "description": "Cream paper palette, sepia and burgundy accents, serif typography. Light mode by default."
+    }
+  },
+  "layouts": {
+    "notaryOffice": {
+      "brandName": "Sealmark",
+      "brandSub": "PDF signing"
+    },
+    "handSigned": {
+      "brandName": "Sealmark",
+      "brandSub": "PDF signing"
+    }
+  }
+}
