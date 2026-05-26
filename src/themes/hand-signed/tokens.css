@@ -1,0 +1,189 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap");
+
+:root[data-theme-slug="hand-signed"] {
+  --font-sans: "EB Garamond", "Times New Roman", serif;
+  --font-serif: "EB Garamond", "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-script: "Caveat", "Brush Script MT", cursive;
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(120, 53, 15, 0.1);
+  --shadow-md: 0 8px 22px rgba(120, 53, 15, 0.16);
+  --shadow-lg: 0 18px 40px rgba(120, 53, 15, 0.22);
+}
+
+:root[data-theme-slug="hand-signed"][data-theme="light"] {
+  --primary-color: #78350f;
+  --primary-hover: #92400e;
+  --primary-shadow: rgba(120, 53, 15, 0.25);
+  --accent-color: #7f1d1d;
+
+  --body-background: #fffbeb;
+  --surface: rgba(255, 251, 235, 0.95);
+  --surface-background: rgba(255, 251, 235, 0.95);
+  --surface-2: #fef3c7;
+  --surface-solid: #fffdf3;
+  --surface-elevated: #fffdf3;
+  --navbar-background: rgba(255, 251, 235, 0.95);
+
+  --border-color: #f3e8c4;
+  --border-soft: rgba(120, 53, 15, 0.08);
+
+  --text-strong: #451a03;
+  --text: #5c2410;
+  --text-muted: #92766a;
+
+  --color-heading: var(--text-strong);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-subtle: #bda88e;
+
+  --input-background: #fffdf3;
+  --input-border: #f3e8c4;
+  --input-focus-bg: #fffdf3;
+
+  --code-background: rgba(120, 53, 15, 0.05);
+  --shadow-card: 0 6px 20px -8px rgba(120, 53, 15, 0.2);
+  --shadow-modal: 0 22px 52px -18px rgba(120, 53, 15, 0.3);
+
+  --success-color: #65a30d;
+  --success-bg: rgba(101, 163, 13, 0.1);
+  --error-color: #b91c1c;
+  --error-bg: rgba(185, 28, 28, 0.08);
+}
+
+:root[data-theme-slug="hand-signed"][data-theme="dark"] {
+  --primary-color: #fbbf24;
+  --primary-hover: #fcd34d;
+  --primary-shadow: rgba(251, 191, 36, 0.3);
+  --accent-color: #fda4af;
+
+  --body-background: #1c1917;
+  --surface: rgba(38, 33, 30, 0.92);
+  --surface-background: rgba(38, 33, 30, 0.92);
+  --surface-2: #292524;
+  --surface-solid: #221e1b;
+  --surface-elevated: #292524;
+  --navbar-background: rgba(28, 25, 23, 0.95);
+
+  --border-color: #44403c;
+  --border-soft: rgba(251, 191, 36, 0.1);
+
+  --text-strong: #fef3c7;
+  --text: #fde68a;
+  --text-muted: #d6c79a;
+
+  --color-heading: var(--text-strong);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-subtle: #a8a29e;
+
+  --input-background: #292524;
+  --input-border: #44403c;
+  --input-focus-bg: #221e1b;
+
+  --code-background: rgba(251, 191, 36, 0.08);
+  --shadow-card: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  --shadow-modal: 0 22px 52px -18px rgba(0, 0, 0, 0.7);
+
+  --success-color: #a3e635;
+  --success-bg: rgba(163, 230, 53, 0.12);
+  --error-color: #fda4af;
+  --error-bg: rgba(253, 164, 175, 0.12);
+}
+
+/* ============================================================
+   Composants — manuscrit : Caveat / Garamond, italic, sépia
+   ============================================================ */
+
+:root[data-theme-slug="hand-signed"] h1,
+:root[data-theme-slug="hand-signed"] h2,
+:root[data-theme-slug="hand-signed"] h3 {
+  font-family: var(--font-script);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+:root[data-theme-slug="hand-signed"] .section-step {
+  font-family: var(--font-script);
+  font-weight: 600;
+  font-size: 1.4rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+:root[data-theme-slug="hand-signed"] code,
+:root[data-theme-slug="hand-signed"] pre,
+:root[data-theme-slug="hand-signed"] .hash-display code {
+  font-family: var(--font-mono);
+}
+
+:root[data-theme-slug="hand-signed"] .btn {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--primary-color);
+  transition: color 180ms ease, background 180ms ease, text-decoration 180ms ease;
+  position: relative;
+}
+:root[data-theme-slug="hand-signed"] .btn:hover:not(:disabled) {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--accent-color);
+  text-underline-offset: 4px;
+  transform: none;
+}
+:root[data-theme-slug="hand-signed"] .btn-primary,
+:root[data-theme-slug="hand-signed"] .btn-success {
+  background: var(--primary-color);
+  color: #fffdf3;
+}
+
+:root[data-theme-slug="hand-signed"] .card,
+:root[data-theme-slug="hand-signed"] .result-box {
+  background: var(--surface-solid);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+/* coins légèrement courbés irréguliers — effet feuille de papier */
+:root[data-theme-slug="hand-signed"] .card::before,
+:root[data-theme-slug="hand-signed"] .result-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+
+/* Animation signature : plume qui écrit + encre qui se pose */
+@keyframes hs-typewriter {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+:root[data-theme-slug="hand-signed"] .hs-typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--primary-color);
+  animation: hs-typewriter 1.6s steps(28) 200ms both,
+             hs-cursor-blink 700ms steps(2) 8 1800ms;
+}
+@keyframes hs-cursor-blink {
+  50% { border-right-color: transparent; }
+}
+
+@keyframes hs-ink-fade {
+  from { opacity: 0; filter: blur(1px); transform: translateY(3px); }
+  to   { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+:root[data-theme-slug="hand-signed"] .result-box.fade-in-up {
+  animation: hs-ink-fade 800ms ease-out;
+}

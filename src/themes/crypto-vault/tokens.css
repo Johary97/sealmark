@@ -1,0 +1,204 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap");
+
+:root[data-theme-slug="crypto-vault"] {
+  --font-sans: "IBM Plex Mono", ui-monospace, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-serif: "IBM Plex Mono", ui-monospace, monospace;
+
+  --radius-sm: 0px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-pill: 2px;
+
+  --shadow-sm: 0 0 0 1px rgba(34, 197, 94, 0.25);
+  --shadow-md: 0 0 14px rgba(34, 197, 94, 0.18);
+  --shadow-lg: 0 0 28px rgba(34, 197, 94, 0.3);
+}
+
+:root[data-theme-slug="crypto-vault"][data-theme="light"] {
+  --primary-color: #22c55e;
+  --primary-hover: #4ade80;
+  --primary-shadow: rgba(34, 197, 94, 0.35);
+  --accent-color: #a3a3a3;
+
+  --body-background: #030712;
+  --surface: rgba(7, 12, 22, 0.92);
+  --surface-background: rgba(7, 12, 22, 0.92);
+  --surface-2: #0a1220;
+  --surface-solid: #06090f;
+  --surface-elevated: #0a1220;
+  --navbar-background: rgba(3, 7, 18, 0.96);
+
+  --border-color: #14532d;
+  --border-soft: rgba(34, 197, 94, 0.12);
+
+  --text-strong: #dcfce7;
+  --text: #bbf7d0;
+  --text-muted: #4ade80;
+
+  --color-heading: var(--text-strong);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-subtle: #166534;
+
+  --input-background: #06090f;
+  --input-border: #14532d;
+  --input-focus-bg: #06090f;
+
+  --code-background: rgba(34, 197, 94, 0.08);
+  --shadow-card: 0 0 16px rgba(34, 197, 94, 0.12);
+  --shadow-modal: 0 0 30px rgba(34, 197, 94, 0.22);
+
+  --success-color: #22c55e;
+  --success-bg: rgba(34, 197, 94, 0.12);
+  --error-color: #f87171;
+  --error-bg: rgba(248, 113, 113, 0.12);
+}
+
+:root[data-theme-slug="crypto-vault"][data-theme="dark"] {
+  --primary-color: #16a34a;
+  --primary-hover: #22c55e;
+  --primary-shadow: rgba(22, 163, 74, 0.4);
+  --accent-color: #737373;
+
+  --body-background: #000000;
+  --surface: rgba(8, 8, 8, 0.94);
+  --surface-background: rgba(8, 8, 8, 0.94);
+  --surface-2: #050505;
+  --surface-solid: #000000;
+  --surface-elevated: #050505;
+  --navbar-background: rgba(0, 0, 0, 0.98);
+
+  --border-color: #166534;
+  --border-soft: rgba(22, 163, 74, 0.12);
+
+  --text-strong: #bbf7d0;
+  --text: #86efac;
+  --text-muted: #22c55e;
+
+  --color-heading: var(--text-strong);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-subtle: #16a34a;
+
+  --input-background: #050505;
+  --input-border: #166534;
+  --input-focus-bg: #000000;
+
+  --code-background: rgba(22, 163, 74, 0.1);
+  --shadow-card: 0 0 14px rgba(22, 163, 74, 0.16);
+  --shadow-modal: 0 0 30px rgba(22, 163, 74, 0.3);
+
+  --success-color: #16a34a;
+  --success-bg: rgba(22, 163, 74, 0.14);
+  --error-color: #fb7185;
+  --error-bg: rgba(251, 113, 133, 0.12);
+}
+
+/* ============================================================
+   Composants — bunker techno : monospace, no radius, glow
+   ============================================================ */
+
+:root[data-theme-slug="crypto-vault"] body,
+:root[data-theme-slug="crypto-vault"] h1,
+:root[data-theme-slug="crypto-vault"] h2,
+:root[data-theme-slug="crypto-vault"] h3,
+:root[data-theme-slug="crypto-vault"] h4 {
+  font-family: var(--font-mono) !important;
+}
+:root[data-theme-slug="crypto-vault"] h1,
+:root[data-theme-slug="crypto-vault"] h2,
+:root[data-theme-slug="crypto-vault"] h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+:root[data-theme-slug="crypto-vault"] .section-step {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+:root[data-theme-slug="crypto-vault"] .btn {
+  border-radius: var(--radius-md) !important;
+  border: 1px solid var(--primary-color) !important;
+  background: transparent;
+  color: var(--primary-color);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  transition: background 120ms ease, box-shadow 120ms ease, color 120ms ease;
+}
+:root[data-theme-slug="crypto-vault"] .btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--primary-color) 15%, transparent);
+  box-shadow: 0 0 14px var(--primary-shadow);
+  color: var(--text-strong);
+  transform: none;
+}
+:root[data-theme-slug="crypto-vault"] .btn-primary,
+:root[data-theme-slug="crypto-vault"] .btn-success {
+  background: color-mix(in srgb, var(--primary-color) 18%, transparent);
+  color: var(--text-strong);
+}
+
+:root[data-theme-slug="crypto-vault"] .card,
+:root[data-theme-slug="crypto-vault"] .result-box {
+  border-radius: var(--radius-md) !important;
+  border: 1px solid var(--border-color);
+  background: var(--surface-solid);
+  box-shadow: var(--shadow-md);
+}
+
+:root[data-theme-slug="crypto-vault"] .hash-display code,
+:root[data-theme-slug="crypto-vault"] code {
+  font-family: var(--font-mono);
+  background: var(--code-background);
+  border: 1px solid var(--border-color);
+  color: var(--primary-color);
+  text-shadow: 0 0 6px var(--primary-shadow);
+}
+
+/* Animation signature : cursor blink + scanline + glow */
+@keyframes cv-cursor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+:root[data-theme-slug="crypto-vault"] .hash-display code::after {
+  content: "_";
+  margin-left: 0.25rem;
+  animation: cv-cursor-blink 1s steps(2) infinite;
+}
+
+@keyframes cv-scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+:root[data-theme-slug="crypto-vault"] .cv-scanline-host {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+:root[data-theme-slug="crypto-vault"] .cv-scanline-host::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(34, 197, 94, 0.18) 50%,
+    transparent 100%
+  );
+  height: 60%;
+  pointer-events: none;
+  animation: cv-scanline 3s linear infinite;
+  z-index: 1;
+  mix-blend-mode: screen;
+}
+
+:root[data-theme-slug="crypto-vault"] .btn:hover:not(:disabled),
+:root[data-theme-slug="crypto-vault"] .badge {
+  text-shadow: 0 0 8px var(--primary-shadow);
+}

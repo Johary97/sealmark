@@ -1,0 +1,175 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+:root[data-theme-slug="notary-office"] {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: "Source Serif Pro", "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "JetBrains Mono", monospace;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(31, 41, 36, 0.08);
+  --shadow-md: 0 6px 18px rgba(4, 120, 87, 0.12);
+  --shadow-lg: 0 18px 40px rgba(4, 120, 87, 0.18);
+}
+
+:root[data-theme-slug="notary-office"][data-theme="light"] {
+  --primary-color: #047857;
+  --primary-hover: #065f46;
+  --primary-shadow: rgba(4, 120, 87, 0.2);
+  --accent-color: #d97706;
+
+  --body-background: #faf6e9;
+  --surface: rgba(255, 252, 240, 0.92);
+  --surface-background: rgba(255, 252, 240, 0.92);
+  --surface-2: #f3ecd2;
+  --surface-solid: #fffdf3;
+  --surface-elevated: #fffdf3;
+  --navbar-background: rgba(250, 246, 233, 0.94);
+
+  --border-color: #e3d8b3;
+  --border-soft: rgba(28, 25, 23, 0.06);
+
+  --text-strong: #1c1917;
+  --text: #292524;
+  --text-muted: #6b6358;
+
+  --color-heading: var(--text-strong);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-subtle: #a8a29e;
+
+  --input-background: #fffdf3;
+  --input-border: #e3d8b3;
+  --input-focus-bg: #fffdf3;
+
+  --code-background: rgba(28, 25, 23, 0.05);
+  --shadow-card: 0 6px 24px -10px rgba(4, 120, 87, 0.18);
+  --shadow-modal: 0 22px 52px -18px rgba(4, 120, 87, 0.28);
+
+  --success-color: #047857;
+  --success-bg: rgba(4, 120, 87, 0.08);
+  --error-color: #b91c1c;
+  --error-bg: rgba(185, 28, 28, 0.08);
+}
+
+:root[data-theme-slug="notary-office"][data-theme="dark"] {
+  --primary-color: #10b981;
+  --primary-hover: #34d399;
+  --primary-shadow: rgba(16, 185, 129, 0.25);
+  --accent-color: #f59e0b;
+
+  --body-background: #0c1410;
+  --surface: rgba(20, 33, 26, 0.88);
+  --surface-background: rgba(20, 33, 26, 0.88);
+  --surface-2: #15241c;
+  --surface-solid: #0e1a14;
+  --surface-elevated: #15241c;
+  --navbar-background: rgba(12, 20, 16, 0.92);
+
+  --border-color: #1f3a2c;
+  --border-soft: rgba(240, 253, 244, 0.06);
+
+  --text-strong: #f0fdf4;
+  --text: #d1fae5;
+  --text-muted: #6ee7b7;
+
+  --color-heading: var(--text-strong);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-subtle: #34d399;
+
+  --input-background: #15241c;
+  --input-border: #1f3a2c;
+  --input-focus-bg: #0e1a14;
+
+  --code-background: rgba(240, 253, 244, 0.04);
+  --shadow-card: 0 8px 28px -12px rgba(0, 0, 0, 0.65);
+  --shadow-modal: 0 22px 52px -18px rgba(0, 0, 0, 0.7);
+
+  --success-color: #10b981;
+  --success-bg: rgba(16, 185, 129, 0.12);
+  --error-color: #fb7185;
+  --error-bg: rgba(251, 113, 133, 0.12);
+}
+
+/* ============================================================
+   Composants — signature notariale : serif italic, sceau de cire
+   ============================================================ */
+
+:root[data-theme-slug="notary-office"] h1,
+:root[data-theme-slug="notary-office"] h2,
+:root[data-theme-slug="notary-office"] h3 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+}
+
+:root[data-theme-slug="notary-office"] .section-step {
+  font-family: var(--font-serif);
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+:root[data-theme-slug="notary-office"] code,
+:root[data-theme-slug="notary-office"] pre,
+:root[data-theme-slug="notary-office"] .hash-display code {
+  font-family: var(--font-mono);
+}
+
+:root[data-theme-slug="notary-office"] .btn {
+  font-family: var(--font-serif);
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--primary-color);
+  transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+}
+:root[data-theme-slug="notary-office"] .btn:hover:not(:disabled) {
+  transform: rotate(-2deg) translateY(-1px);
+  box-shadow: 0 8px 16px -8px var(--primary-shadow);
+}
+:root[data-theme-slug="notary-office"] .btn-primary,
+:root[data-theme-slug="notary-office"] .btn-success {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fffdf3;
+}
+
+:root[data-theme-slug="notary-office"] .card,
+:root[data-theme-slug="notary-office"] .result-box {
+  background: var(--surface-solid);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+/* Animation signature : « cachet qui se pose » */
+@keyframes notary-stamp-down {
+  0%   { transform: scale(1.4) rotate(-8deg); opacity: 0; }
+  60%  { transform: scale(0.92) rotate(2deg); opacity: 1; }
+  80%  { transform: scale(1.04) rotate(-1deg); }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+:root[data-theme-slug="notary-office"] .notary-stamp,
+:root[data-theme-slug="notary-office"] .result-box.fade-in-up {
+  animation: notary-stamp-down 600ms cubic-bezier(0.25, 1.6, 0.45, 1);
+}
+
+@keyframes notary-shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-4px); }
+  40%      { transform: translateX(4px); }
+  60%      { transform: translateX(-3px); }
+  80%      { transform: translateX(2px); }
+}
+:root[data-theme-slug="notary-office"] .error-banner {
+  animation: notary-shake 80ms ease-in-out;
+}

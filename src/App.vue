@@ -1,34 +1,15 @@
 <template>
-  <header class="app-header">
-    <div class="header-inner">
-      <a href="/" class="brand" aria-label="Sealmark">
-        <svg class="brand-mark" viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 4h14l6 6v18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
-          <path d="M20 4v6h6" />
-          <path d="M10 20l3 3 7-7" />
-        </svg>
-        <span class="brand-name">Sealmark</span>
-      </a>
-      <button type="button" class="theme-toggle" @click="toggleTheme" :title="theme === 'dark' ? 'Mode clair' : 'Mode sombre'" :aria-label="theme === 'dark' ? 'Activer le mode clair' : 'Activer le mode sombre'">
-        <svg v-if="theme === 'dark'" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-        </svg>
-        <svg v-else viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-        </svg>
-      </button>
-    </div>
-    <div class="hero">
+  <ThemeBoundary>
+    <!-- Hero (slot "header") -->
+    <template #header>
       <h1>Signez vos PDF.<br />Prouvez leur intégrité.</h1>
       <p class="tagline">
         Apposez une signature manuscrite, scellez le document avec une empreinte cryptographique et vérifiez à tout moment qu'il n'a pas été modifié. Vos fichiers ne quittent jamais votre appareil.
       </p>
-    </div>
-  </header>
+    </template>
 
-  <nav class="tabs">
-    <div class="tabs-inner">
+    <!-- Onglets (slot "tabs") -->
+    <template #tabs>
       <button
         v-for="tab in tabs"
         :key="tab.id"
@@ -37,10 +18,9 @@
       >
         {{ tab.label }}
       </button>
-    </div>
-  </nav>
+    </template>
 
-  <main class="app-main">
+    <!-- Contenu principal (slot par défaut) -->
     <section v-if="activeTab === 'sign'" class="panel-section fade-in-up">
       <h2 class="section-step">1. Sélectionner le document</h2>
       <div v-if="!pdfFile">
@@ -58,12 +38,14 @@
         <div class="split">
           <div class="split-left">
             <h2 class="section-step">2. Choisir l'emplacement</h2>
-            <PdfPreview
-              :pdf-file="pdfFile"
-              :signature-preview="signatureDataUrl"
-              :signature-width="150"
-              @position-selected="onPositionSelected"
-            />
+            <div class="cv-scanline-host">
+              <PdfPreview
+                :pdf-file="pdfFile"
+                :signature-preview="signatureDataUrl"
+                :signature-width="150"
+                @position-selected="onPositionSelected"
+              />
+            </div>
           </div>
 
           <div class="split-right">
@@ -77,7 +59,7 @@
             <div class="action-row">
               <button
                 type="button"
-                class="btn btn-success"
+                class="btn btn-success notary-stamp-trigger"
                 :disabled="!signatureDataUrl || !signaturePosition || processing"
                 @click="signPdf"
               >
@@ -85,7 +67,7 @@
               </button>
             </div>
 
-            <div v-if="signedResult" class="result-box fade-in-up">
+            <div v-if="signedResult" class="result-box fade-in-up notary-stamp">
               <p class="result-title">✓ Document scellé</p>
               <button type="button" class="btn btn-primary" @click="downloadSigned">Télécharger le document signé</button>
 
@@ -112,30 +94,34 @@
     <section v-if="activeTab === 'crypto'" class="panel-section fade-in-up">
       <CryptoDemo />
     </section>
-  </main>
 
-  <footer class="app-footer">
-    <div class="footer-inner">
+    <!-- Footer (slot "footer") -->
+    <template #footer>
       <span class="footer-brand">Sealmark</span>
       <span class="footer-sep">·</span>
       <span class="footer-claim">Traitement local, sans téléversement</span>
-    </div>
-  </footer>
+    </template>
+  </ThemeBoundary>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import PdfDropzone from './components/PdfDropzone.vue'
 import PdfPreview from './components/PdfPreview.vue'
 import SignaturePad from './components/SignaturePad.vue'
 import IntegrityChecker from './components/IntegrityChecker.vue'
 import CryptoDemo from './components/CryptoDemo.vue'
+import ThemeBoundary from '@theme/ThemeBoundary.vue'
+import { provideTheme } from '@theme/useTheme.js'
 import {
   superposerImageSurPdf,
   dataURLtoFile,
   percentToPdfPosition,
   generateDocumentHash
 } from './services/pdf-service.js'
+
+// Active le store thématique (provide/inject) au niveau racine.
+provideTheme()
 
 const tabs = [
   { id: 'sign', label: 'Signer un document' },
@@ -144,7 +130,6 @@ const tabs = [
 ]
 
 const activeTab = ref('sign')
-const theme = ref('dark')
 const pdfFile = ref(null)
 const signatureDataUrl = ref(null)
 const signaturePosition = ref(null)
@@ -152,20 +137,6 @@ const signedResult = ref(null)
 const errorMessage = ref('')
 const processing = ref(false)
 const copied = ref(false)
-
-onMounted(() => {
-  const stored = localStorage.getItem('pdf-signature-theme')
-  if (stored === 'light' || stored === 'dark') {
-    theme.value = stored
-    document.documentElement.setAttribute('data-theme', stored)
-  }
-})
-
-function toggleTheme() {
-  theme.value = theme.value === 'dark' ? 'light' : 'dark'
-  document.documentElement.setAttribute('data-theme', theme.value)
-  localStorage.setItem('pdf-signature-theme', theme.value)
-}
 
 function onPdfSelected(file) {
   pdfFile.value = file
@@ -264,133 +235,8 @@ function formatSize(bytes) {
 }
 </script>
 
-<style scoped>
-.app-header {
-  background: var(--navbar-background);
-  border-bottom: 1px solid var(--border-color);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.header-inner {
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 1rem 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.625rem;
-  color: var(--color-heading);
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
-
-.brand:hover {
-  color: var(--primary-color);
-  text-decoration: none;
-}
-
-.brand-mark {
-  color: var(--primary-color);
-}
-
-.brand-name {
-  font-family: var(--font-mono);
-  font-size: 1.125rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.hero {
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 2.5rem 1.5rem 2.75rem;
-  text-align: left;
-}
-
-.hero h1 {
-  margin: 0;
-  font-size: clamp(1.75rem, 2.5vw + 1rem, 2.625rem);
-  color: var(--color-heading);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-.tagline {
-  margin: 0.875rem 0 0;
-  font-size: 1rem;
-  color: var(--color-muted);
-  max-width: 62ch;
-  line-height: 1.55;
-}
-
-.theme-toggle {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  background: transparent;
-  color: var(--color-text);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--transition-fast);
-}
-
-.theme-toggle:hover {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-  transform: translateY(-1px);
-}
-
-.tabs {
-  background: transparent;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.tabs-inner {
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  display: flex;
-  gap: 0.25rem;
-}
-
-.tab-btn {
-  padding: 0.875rem 1.25rem;
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid transparent;
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-muted);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.tab-btn:hover {
-  color: var(--color-heading);
-}
-
-.tab-btn.active {
-  color: var(--primary-color);
-  border-bottom-color: var(--primary-color);
-}
-
-.app-main {
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 1.75rem 1.5rem;
-}
-
+<style>
+/* Styles globaux non scopés (pour fonctionner à travers les Layouts qui consomment les slots) */
 .panel-section {
   display: flex;
   flex-direction: column;
@@ -401,8 +247,28 @@ function formatSize(bytes) {
   margin: 0;
   font-size: 1rem;
   font-family: var(--font-mono);
-  color: var(--color-heading);
+  color: var(--color-heading, var(--text-strong));
   font-weight: 500;
+}
+
+.tab-btn {
+  padding: 0.875rem 1.25rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-muted, var(--text-muted));
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.2s ease);
+}
+.tab-btn:hover {
+  color: var(--color-heading, var(--text-strong));
+}
+.tab-btn.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
 }
 
 .split {
@@ -411,13 +277,9 @@ function formatSize(bytes) {
   gap: 1.5rem;
   align-items: start;
 }
-
 @media (max-width: 1000px) {
-  .split {
-    grid-template-columns: 1fr;
-  }
+  .split { grid-template-columns: 1fr; }
 }
-
 .split-left,
 .split-right {
   display: flex;
@@ -434,9 +296,8 @@ function formatSize(bytes) {
   border: 1px solid var(--success-color);
   border-radius: var(--radius-md);
   font-size: 0.875rem;
-  color: var(--color-heading);
+  color: var(--color-heading, var(--text-strong));
 }
-
 .link-btn {
   background: none;
   border: none;
@@ -446,13 +307,11 @@ function formatSize(bytes) {
   font-size: 0.8rem;
   font-family: inherit;
 }
-
 .hint {
   margin: 0.5rem 0 0;
   font-size: 0.8rem;
-  color: var(--color-muted);
+  color: var(--color-muted, var(--text-muted));
 }
-
 .action-row {
   margin-top: 0.5rem;
   display: flex;
@@ -462,14 +321,13 @@ function formatSize(bytes) {
 .result-box {
   margin-top: 1rem;
   padding: 1rem;
-  background: var(--surface-background);
+  background: var(--surface-background, var(--surface));
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
 }
-
 .result-title {
   margin: 0;
   color: var(--success-color);
@@ -483,7 +341,6 @@ function formatSize(bytes) {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
-
 .hash-display code {
   font-family: var(--font-mono);
   font-size: 0.7rem;
@@ -491,19 +348,17 @@ function formatSize(bytes) {
   border: 1px solid var(--border-color);
   padding: 0.375rem 0.625rem;
   border-radius: var(--radius-sm);
-  color: var(--color-text);
+  color: var(--color-text, var(--text));
   word-break: break-all;
   cursor: pointer;
   flex: 1;
   min-width: 0;
 }
-
 .copied-indicator {
   color: var(--success-color);
   font-size: 0.75rem;
   font-family: var(--font-mono);
 }
-
 .error-banner {
   margin-top: 0.75rem;
   padding: 0.75rem 0.875rem;
@@ -514,49 +369,16 @@ function formatSize(bytes) {
   font-size: 0.85rem;
 }
 
-.app-footer {
-  border-top: 1px solid var(--border-color);
-  margin-top: 3rem;
-}
-
-.footer-inner {
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 1.25rem 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  color: var(--color-subtle);
-}
-
 .footer-brand {
   font-family: var(--font-mono);
   font-weight: 700;
-  color: var(--color-muted);
+  color: var(--color-muted, var(--text-muted));
   letter-spacing: 0.02em;
 }
-
 .footer-sep {
-  color: var(--color-subtle);
+  color: var(--color-subtle, var(--text-muted));
 }
-
 .footer-claim {
   font-style: italic;
-}
-
-@media (max-width: 640px) {
-  .header-inner {
-    padding: 0.875rem 1rem;
-  }
-  .hero {
-    padding: 2rem 1rem 2.25rem;
-  }
-  .tabs-inner,
-  .app-main,
-  .footer-inner {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
 }
 </style>
