@@ -1,4 +1,5 @@
 <template>
+  <Teleport to="body">
   <div ref="rootRef" class="app-fab" :class="{ 'is-open': open }">
     <ul class="app-fab__actions" :aria-hidden="!open">
       <li class="app-fab__action">
@@ -46,6 +47,7 @@
       </svg>
     </button>
   </div>
+  </Teleport>
 </template>
 
 <script setup>
@@ -89,7 +91,7 @@ onBeforeUnmount(() => {
   position: fixed;
   right: 1rem;
   bottom: 1rem;
-  z-index: 60;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
